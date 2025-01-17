@@ -25,8 +25,16 @@ answer = """
 SELECT * FROM beverages
 CROSS JOIN food_items
 """
-
 solution = duckdb.sql(answer).df()
+
+with st.sidebar:
+    option = st.selectbox(
+        "What would you like to review ?",
+        ("Joins ", "Group By", "Windows Functions"),
+        index=None,
+        placeholder="Select a theme..."
+    )
+    st.write("You Selected:", option)
 
 st.header("Enter your code")
 query = st.text_area(label="votre code SQL ici", key="user_input")
@@ -35,7 +43,6 @@ if query:
     st.dataframe(result)
 
 tab2, tab3 = st.tabs(["Tables", "Solution"])
-
 with tab2:
     st.write("table: beverages")
     st.dataframe(beverages)
@@ -43,8 +50,5 @@ with tab2:
     st.dataframe(food_items)
     st.write("expected:")
     st.dataframe(solution)
-
-
 with tab3:
     st.write(answer)
-
